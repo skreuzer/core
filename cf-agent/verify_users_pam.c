@@ -80,6 +80,8 @@ static const char *GetPlatformSpecificExpirationDate()
     return "January 02 1970";
 #elif defined(__linux__)
     return "1970-01-02";
+#elif defined(__FreeBSD__)
+    return "02-Jan-1970";
 #else
 # error Your operating system lacks the proper string for the "usermod -e" utility.
 #endif
@@ -682,7 +684,11 @@ static bool IsAccountLocked(const char *puser, const struct passwd *passwd_info)
     {
         return false;
     }
+#ifdef __FreeBSD__
+    return (system_hash[0] == '*');
+#else
     return (system_hash[0] == '!');
+#endif
 }
 
 static bool PlatformSupportsExpirationLock(void)
