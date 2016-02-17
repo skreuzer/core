@@ -784,6 +784,13 @@ AS_IF([test "x$CHPASSWD" != "x"],
       [AC_DEFINE_UNQUOTED(CHPASSWD, ["$CHPASSWD"], [Path to chpasswd tool])]
      )
 
+dnl FreeBSD has this.
+CF3_PATH_ROOT_PROG([CHPASS], [chpass], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
+AS_IF([test "x$CHPASS" != "x"],
+      [AC_DEFINE(HAVE_CHPASS, 1, [Define if chpass tool is present])]
+      [AC_DEFINE_UNQUOTED(CHPASS, ["$CHPASS"], [Path to chpass tool])]
+     )
+
 dnl AIX has this.
 CF3_PATH_ROOT_PROG([PWDADM], [pwdadm], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
 AS_IF([test "x$PWDADM" != "x"],
@@ -791,10 +798,24 @@ AS_IF([test "x$PWDADM" != "x"],
       [AC_DEFINE_UNQUOTED(PWDADM, ["$PWDADM"], [Path to pwdadm tool])]
      )
 
+dnl FreeBSD has this.
+CF3_PATH_ROOT_PROG([PW], [pw], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
+AS_IF([test "x$PW" != "x"],
+      [AC_DEFINE(HAVE_PW, 1, [Define if pw tool is present])]
+      [AC_DEFINE_UNQUOTED(PW, ["$PW"], [Path to pw tool])]
+     )
+
 CF3_PATH_ROOT_PROG([USERADD], [useradd], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
 AS_IF([test "x$USERADD" != "x"],
       [AC_DEFINE(HAVE_USERADD, 1, [Define if useradd tool is present])]
       [AC_DEFINE_UNQUOTED(USERADD, ["$USERADD"], [Path to useradd tool])]
+     )
+
+dnl FreeBSD has this.
+CF3_PATH_ROOT_PROG([ADDUSER], [adduser], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
+AS_IF([test "x$ADDUSER" != "x"],
+      [AC_DEFINE(HAVE_ADDUSER, 1, [Define if adduser tool is present])]
+      [AC_DEFINE_UNQUOTED(ADDUSER, ["$ADDUSER"], [Path to adduser tool])]
      )
 
 CF3_PATH_ROOT_PROG([USERMOD], [usermod], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
@@ -809,12 +830,18 @@ AS_IF([test "x$USERDEL" != "x"],
       [AC_DEFINE_UNQUOTED(USERDEL, ["$USERDEL"], [Path to userdel tool])]
      )
 
+dnl FreeBSD has this.
+CF3_PATH_ROOT_PROG([RMUSER], [rmuser], [], [/sbin:/usr/sbin:/bin:/usr/bin:$PATH])
+AS_IF([test "x$RMUSER" != "x"],
+      [AC_DEFINE(HAVE_RMUSER, 1, [Define if rmuser tool is present])]
+      [AC_DEFINE_UNQUOTED(RMUSER, ["$RMUSER"], [Path to rmuser tool])]
+     )
+
 AS_IF([test "x$USERADD" != x && \
        test "x$USERMOD" != x && test "x$USERDEL" != x],
       [have_userprogs=yes],
       [have_userprogs=no]
 )
-
 
 AC_ARG_WITH([pam], AS_HELP_STRING([--with-pam], [Compile with PAM support]))
 AS_IF([test x$with_pam != xno],
